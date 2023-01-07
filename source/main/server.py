@@ -66,7 +66,7 @@ if __name__ == "__main__":
         server_model, 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
     )
-    mlogger = open("{}/log.txt".format(save_ckp_dir), "a")
+    mlogger = open("{}/server.txt".format(save_ckp_dir), "a")
     mlogger.write("{:<8} - loss:{:.4f}, accuracy:{:.4f}".format(
         "test", 
         results["test_loss"], results["test_accuracy"], 

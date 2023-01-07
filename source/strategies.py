@@ -24,8 +24,7 @@ class FedAvg(fl.server.strategy.FedAvg):
         self.save_ckp_dir = save_ckp_dir
         super().__init__(*args, **kwargs)
 
-        self.server_accuracy = 0.0
-        self.mlogger = open("{}/log.txt".format(self.save_ckp_dir), "w")
+        self.server_accuracy, self.convergence_round = 0.0, 1
 
     def aggregate_fit(self, 
         server_round, 
@@ -48,7 +47,9 @@ class FedAvg(fl.server.strategy.FedAvg):
                 self.server_model, 
                 "{}/server.ptl".format(self.save_ckp_dir), 
             )
-            self.server_accuracy = aggregated_metrics["evaluate_accuracy"]
+            self.server_accuracy, self.convergence_round = aggregated_metrics["evaluate_accuracy"], server_round
+            mlogger = open("{}/server.txt".format(self.save_ckp_dir), "w")
+            mlogger.write("convergence_round:{}\n".format(self.convergence_round))
 
         aggregated_parameters = [value.cpu().numpy() for key, value in self.server_model.state_dict().items()]
         aggregated_parameters = fl.common.ndarrays_to_parameters(aggregated_parameters)
