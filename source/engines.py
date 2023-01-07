@@ -79,3 +79,6 @@ def server_test_fn(
     ))
 
     print("\nFinish Server Testing ...\n" + " = "*16)
+    return {
+        "test_loss":test_loss, "test_accuracy":test_accuracy, 
+    }

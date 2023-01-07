@@ -34,7 +34,7 @@ if __name__ == "__main__":
     )
     initial_parameters = [value.cpu().numpy() for key, value in server_model.state_dict().items()]
     initial_parameters = fl.common.ndarrays_to_parameters(initial_parameters)
-    save_ckp_dir = "../../ckps/{}".format(args.dataset)
+    save_ckp_dir = "../../ckps/{}".format(args.project)
     if not os.path.exists(save_ckp_dir):
         os.makedirs(save_ckp_dir)
     fl.server.start_server(
@@ -58,11 +58,16 @@ if __name__ == "__main__":
         batch_size = 32, 
     )
     server_model = torch.load(
-        "../../ckps/{}/server.ptl".format(args.dataset), 
+        "{}/server.ptl".format(save_ckp_dir), 
         map_location = "cpu", 
     )
-    server_test_fn(
+    results = server_test_fn(
         test_loader, 
         server_model, 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
     )
+    mlogger = open("{}/log.txt".format(save_ckp_dir), "a")
+    mlogger.write("{:<8} - loss:{:.4f}, accuracy:{:.4f}".format(
+        "test", 
+        results["test_loss"], results["test_accuracy"], 
+    ))

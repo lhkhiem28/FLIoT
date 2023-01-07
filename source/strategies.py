@@ -25,6 +25,7 @@ class FedAvg(fl.server.strategy.FedAvg):
         super().__init__(*args, **kwargs)
 
         self.server_accuracy = 0.0
+        self.mlogger = open("{}/log.txt".format(self.save_ckp_dir), "w")
 
     def aggregate_fit(self, 
         server_round, 
