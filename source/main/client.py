@@ -46,14 +46,22 @@ class Client(fl.client.NumPyClient):
     ):
         self.set_parameters(parameters)
         self.client_model.train()
+        if self.round > 1:
+            self.communication_tok = time.time()
+            wandb.log({"communication_time":self.communication_tok - self.communication_tik}, step = self.round)
 
         self.lr_scheduler.step()
+        self.training_tik = time.time()
         results = client_fit_fn(
             self.fit_loaders, self.num_epochs, 
             self.client_model, 
             self.optimizer, 
             self.device, 
         )
+        self.training_tok = time.time()
+        wandb.log({"training_time":self.training_tok - self.training_tik}, step = self.round)
+
+        self.communication_tik = time.time()
         self.round += 1
 
         return self.get_parameters({}), len(self.fit_loaders["fit"].dataset), results
