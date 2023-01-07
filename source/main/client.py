@@ -106,7 +106,7 @@ if __name__ == "__main__":
     }
     client_model = CNN3(
         image_size, num_channels, 
-        num_classes = 10, 
+        num_classes = args.num_classes, 
     )
     optimizer = optim.SGD(
         client_model.parameters(), weight_decay = 5e-4, 

@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     server_model = CNN3(
         image_size, num_channels, 
-        num_classes = 10, 
+        num_classes = args.num_classes, 
     )
     initial_parameters = [value.cpu().numpy() for key, value in server_model.state_dict().items()]
     initial_parameters = fl.common.ndarrays_to_parameters(initial_parameters)
