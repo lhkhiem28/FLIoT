@@ -4,8 +4,8 @@ from libs import *
 
 class CNN3(nn.Module):
     def __init__(self, 
-        image_size, in_channels = 3, 
-        num_classes = 10, 
+        image_size, in_channels, 
+        num_classes, 
     ):
         super(CNN3, self).__init__()
         self.conv_1 = nn.Sequential(
