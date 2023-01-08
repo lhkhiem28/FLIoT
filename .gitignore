@@ -1,4 +1,5 @@
-ckps/*/*.ptl
+*.sh
 
 **/__pycache__
 **/wandb
+ckps/*/*.ptl
