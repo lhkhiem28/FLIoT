@@ -1,0 +1,2 @@
+convergence_round:75
+test     - loss:3.7726, accuracy:0.1671
