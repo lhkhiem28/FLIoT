@@ -75,7 +75,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
     parser.add_argument("--project", type = str)
     args = parser.parse_args()
-    wandb.login()
+    wandb.login(key = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
     wandb.init(
         entity = "fliot", project = args.project, 
         name = "client {}".format(args.client_id), 
