@@ -28,9 +28,9 @@ if __name__ == "__main__":
     else:
         image_size, num_channels,  = 32, 3, 
 
-    server_model = CNN3(
-        image_size, num_channels, 
-        num_classes = args.num_classes, 
+    server_model = torchvision.models.resnet18()
+    server_model.fc = nn.Linear(
+        server_model.fc.in_features, args.num_classes, 
     )
     initial_parameters = [value.cpu().numpy() for key, value in server_model.state_dict().items()]
     initial_parameters = fl.common.ndarrays_to_parameters(initial_parameters)

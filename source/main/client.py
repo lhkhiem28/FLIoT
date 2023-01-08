@@ -104,12 +104,12 @@ if __name__ == "__main__":
             shuffle = True, 
         ), 
     }
-    client_model = CNN3(
-        image_size, num_channels, 
-        num_classes = args.num_classes, 
+    client_model = torchvision.models.resnet18()
+    client_model.fc = nn.Linear(
+        client_model.fc.in_features, args.num_classes, 
     )
     optimizer = optim.SGD(
-        client_model.parameters(), weight_decay = 5e-4, 
+        client_model.parameters(), weight_decay = 1e-4, 
         lr = 0.01, 
     )
 
