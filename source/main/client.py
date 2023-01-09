@@ -69,7 +69,7 @@ class Client(fl.client.NumPyClient):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 100)
+    parser.add_argument("--num_rounds", type = int, default = 500)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--client_id", type = int)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
@@ -90,18 +90,20 @@ if __name__ == "__main__":
         "fit":torch.utils.data.DataLoader(
             ImageDataset(
                 data_dir = "../../../datasets/{}/clients/c{}/fit/".format(args.dataset, args.client_id), 
-                num_channels = num_channels, 
+                image_size = image_size, 
+                augment = True, 
             ), 
-            batch_size = 32, 
+            batch_size = 16, 
             shuffle = True, 
         ), 
         "evaluate":torch.utils.data.DataLoader(
             ImageDataset(
                 data_dir = "../../../datasets/{}/clients/c{}/evaluate/".format(args.dataset, args.client_id), 
-                num_channels = num_channels, 
+                image_size = image_size, 
+                augment = False, 
             ), 
-            batch_size = 32, 
-            shuffle = True, 
+            batch_size = 16, 
+            shuffle = False, 
         ), 
     }
     client_model = torchvision.models.resnet18()
@@ -118,7 +120,7 @@ if __name__ == "__main__":
         T_max = args.num_rounds, 
     )
     client = Client(
-        fit_loaders, num_epochs = 1, 
+        fit_loaders, num_epochs = 2, 
         client_model = client_model, 
         optimizer = optimizer, 
         lr_scheduler = lr_scheduler, 

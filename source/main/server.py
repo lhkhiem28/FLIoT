@@ -12,7 +12,7 @@ from engines import server_test_fn
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 100)
+    parser.add_argument("--num_rounds", type = int, default = 500)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
     parser.add_argument("--project", type = str)
@@ -53,9 +53,9 @@ if __name__ == "__main__":
     test_loader = torch.utils.data.DataLoader(
         ImageDataset(
             data_dir = "../../../datasets/{}/test/".format(args.dataset), 
-            num_channels = num_channels, 
+            image_size = image_size, 
         ), 
-        batch_size = 32, 
+        batch_size = 16, 
     )
     server_model = torch.load(
         "{}/server.ptl".format(save_ckp_dir), 
