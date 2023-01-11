@@ -77,7 +77,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     wandb.login(key = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
     wandb.init(
-        entity = "fliot", project = args.project, 
+        entity = "ods-team", project = args.project, 
         name = "client {}".format(args.client_id), 
     )
 
