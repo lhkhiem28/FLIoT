@@ -12,14 +12,15 @@ from engines import server_test_fn
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 500)
+    parser.add_argument("--num_rounds", type = int, default = 300)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
-    parser.add_argument("--project", type = str)
+    parser.add_argument("--wandb_key", type = str, default = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
+    parser.add_argument("--wandb_entity", type = str, default = "fliot"), parser.add_argument("--wandb_project", type = str), 
     args = parser.parse_args()
-    wandb.login(key = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
+    wandb.login(key = args.wandb_key)
     wandb.init(
-        entity = "ods-team", project = args.project, 
+        entity = args.wandb_entity, project = args.wandb_project, 
         name = "server", 
     )
 
@@ -28,13 +29,13 @@ if __name__ == "__main__":
     else:
         image_size, num_channels,  = 32, 3, 
 
-    server_model = torchvision.models.resnet18()
-    server_model.fc = nn.Linear(
-        server_model.fc.in_features, args.num_classes, 
+    server_model = CNN3(
+        image_size, num_channels, 
+        num_classes = args.num_classes, 
     )
     initial_parameters = [value.cpu().numpy() for key, value in server_model.state_dict().items()]
     initial_parameters = fl.common.ndarrays_to_parameters(initial_parameters)
-    save_ckp_dir = "../../ckps/{}".format(args.project)
+    save_ckp_dir = "../../ckps/{}".format(args.wandb_project)
     if not os.path.exists(save_ckp_dir):
         os.makedirs(save_ckp_dir)
     fl.server.start_server(

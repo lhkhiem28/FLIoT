@@ -69,15 +69,16 @@ class Client(fl.client.NumPyClient):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 500)
+    parser.add_argument("--num_rounds", type = int, default = 300)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--client_id", type = int)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
-    parser.add_argument("--project", type = str)
+    parser.add_argument("--wandb_key", type = str, default = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
+    parser.add_argument("--wandb_entity", type = str, default = "fliot"), parser.add_argument("--wandb_project", type = str), 
     args = parser.parse_args()
-    wandb.login(key = "3304b9a0c28f65f7d1097ef922eca22b370116cb")
+    wandb.login(key = args.wandb_key)
     wandb.init(
-        entity = "ods-team", project = args.project, 
+        entity = args.wandb_entity, project = args.wandb_project, 
         name = "client {}".format(args.client_id), 
     )
 
@@ -106,9 +107,9 @@ if __name__ == "__main__":
             shuffle = False, 
         ), 
     }
-    client_model = torchvision.models.resnet18()
-    client_model.fc = nn.Linear(
-        client_model.fc.in_features, args.num_classes, 
+    client_model = CNN3(
+        image_size, num_channels, 
+        num_classes = args.num_classes, 
     )
     optimizer = optim.SGD(
         client_model.parameters(), weight_decay = 1e-4, 
