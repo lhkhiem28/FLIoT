@@ -80,6 +80,7 @@ if __name__ == "__main__":
     wandb.init(
         entity = args.wandb_entity, project = args.wandb_project, 
         name = "client {}".format(args.client_id), 
+        mode = "offline", 
     )
 
     if "MNIST" in args.dataset:
