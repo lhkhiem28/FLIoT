@@ -12,7 +12,7 @@ from engines import server_test_fn
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "192.168.50.79"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 300)
+    parser.add_argument("--num_rounds", type = int, default = 500)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
     parser.add_argument("--wandb_key", type = str, default = "3304b9a0c28f65f7d1097ef922eca22b370116cb")

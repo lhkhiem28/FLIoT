@@ -69,7 +69,7 @@ class Client(fl.client.NumPyClient):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "192.168.50.79"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--num_rounds", type = int, default = 300)
+    parser.add_argument("--num_rounds", type = int, default = 500)
     parser.add_argument("--num_clients", type = int, default = 8)
     parser.add_argument("--client_id", type = int)
     parser.add_argument("--dataset", type = str), parser.add_argument("--num_classes", type = int)
