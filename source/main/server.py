@@ -45,4 +45,4 @@ if __name__ == "__main__":
         ), 
     )
 
-    wandb.close()
+    wandb.finish()

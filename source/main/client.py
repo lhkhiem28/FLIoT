@@ -125,4 +125,4 @@ if __name__ == "__main__":
         client = client, 
     )
 
-    wandb.close()
+    wandb.finish()
