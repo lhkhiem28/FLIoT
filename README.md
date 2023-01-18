@@ -6,7 +6,7 @@
 2. Create a new folder with the name datasets
 3. Download the dataset for experiments from [here](https://drive.google.com/drive/folders/1JqMeujxMVhY7eQD-JqGDRGvuERlHl8n6?usp=sharing), then extract it to the datasets folder
 
-    The workspace structure must be like this: 
+    The workspace structure must be like this:
     ```bash
     .
     ├── datasets
@@ -17,6 +17,7 @@
     │   │   │   │   ├── 1
     │   │   │   │   ├── .
     │   │   │   │   └── 9
+    │   │   │   │   
     │   │   │   ├── ...
     │   │   │   └── c63
     │   │   └── test
@@ -36,7 +37,6 @@
             │   └── server.py
             ├── models
             │   └── cnn.py
-            ├── partition.py
             └── strategies.py
     ```
 
@@ -51,13 +51,12 @@
 
 On the server:</br>
 `cd fliot/source/main`</br>
-`python3 server.py --dataset="CIFAR10-64-IID" --num_classes=10 --project="Nano-8-IID-CIFAR10"`
+`python3 server.py --dataset="CIFAR10-64-IID" --num_classes=10 --num_clients=8 --wandb_project="Sim-8-IID-CIFAR10"`
 
 On the client `i`:</br>
 `cd fliot/source/main`</br>
-`python3 client.py --dataset="CIFAR10-64-IID" --num_classes=10 --project="Nano-8-IID-CIFAR10" --client_id=i`
+`python3 client.py --dataset="CIFAR10-64-IID" --num_classes=10 --wandb_project="Sim-8-IID-CIFAR10" --client_id=i`
 
 Other arguments that can be can change when needed:</br>
-`--server_address`: IP address of the server; `--server_port`: Opened port on the server</br>
-`--num_rounds`: Number of communication rounds</br>
-`--num_clients`: Number of participating clients</br>
+`--server_address`:IP address of the server, `--server_port`:Opened port on the server</br>
+`--num_rounds`:Number of communication rounds</br>
