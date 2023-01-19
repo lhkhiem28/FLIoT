@@ -86,7 +86,7 @@ if __name__ == "__main__":
     fit_loaders = {
         "fit":torch.utils.data.DataLoader(
             ImageDataset(
-                data_dir = "../../../datasets/{}/clients/c{}/fit/".format(args.dataset, args.client_id), 
+                data_dir = "../../../datasets/{}/clients/c{}/fit/".format(args.dataset, int(args.client_id)), 
                 augment = True, 
             ), 
             batch_size = 16, 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         ), 
         "evaluate":torch.utils.data.DataLoader(
             ImageDataset(
-                data_dir = "../../../datasets/{}/clients/c{}/evaluate/".format(args.dataset, args.client_id), 
+                data_dir = "../../../datasets/{}/clients/c{}/evaluate/".format(args.dataset, int(args.client_id)), 
                 augment = False, 
             ), 
             batch_size = 16, 
