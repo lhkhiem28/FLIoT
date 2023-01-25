@@ -33,7 +33,7 @@ class FedAvg(fl.server.strategy.FedAvg):
         results = server_test_fn(
             self.test_loader, 
             self.server_model, 
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
+            device = torch.device("cpu"), 
         )
         wandb.log({"test_loss":results["test_loss"], "test_accuracy":results["test_accuracy"], }, step = server_round)
 
