@@ -37,11 +37,12 @@
             ├── data.py
             ├── engines.py
             ├── libs.py
+            ├── partition.py
             ├── main
             │   ├── client.py
             │   └── server.py
             ├── models
-            │   └── ...
+            │   └── cnn.py
             └── strategies.py
     ```
 
@@ -56,11 +57,11 @@
 
 On the server:</br>
 `cd fliot/source/main`</br>
-`python3 server.py --dataset="CIFAR10-64-IID" --num_classes=10 --num_clients=8 --wandb_project="Sim-8-IID-CIFAR10"`
+`python3 server.py --dataset="CIFAR10-64-IID" --num_classes=10 --num_clients=8 --wandb_project=""`
 
 On the client `i`:</br>
 `cd fliot/source/main`</br>
-`python3 client.py --dataset="CIFAR10-64-IID" --num_classes=10 --wandb_project="Sim-8-IID-CIFAR10" --client_id=i`
+`python3 client.py --dataset="CIFAR10-64-IID" --num_classes=10 --wandb_project="" --client_id=i`
 
 Other arguments that can be can change when needed:</br>
 `--server_address`:IP address of the server, `--server_port`:Opened port on the server</br>
