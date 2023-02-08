@@ -21,10 +21,10 @@ if not args.non_iid:
     for c, chunk in enumerate(chunks):
         client_image_files = image_files[num_examples_per_chunk*(chunk):num_examples_per_chunk*(chunk + 1)]
         np.random.shuffle(client_image_files)
-        for image_file in client_image_files[:int(num_examples_per_chunk*0.9)]:
+        for image_file in client_image_files[:int(len(client_image_files)*0.9)]:
             label = int(image_file.split("/")[-2])
             shutil.copy(image_file, args.data_dir + "clients/c{}/fit/{}/".format(str(c), str(label)))
-        for image_file in client_image_files[int(num_examples_per_chunk*0.9):]:
+        for image_file in client_image_files[int(len(client_image_files)*0.9):]:
             label = int(image_file.split("/")[-2])
             shutil.copy(image_file, args.data_dir + "clients/c{}/evaluate/{}/".format(str(c), str(label)))
 else:
@@ -38,9 +38,9 @@ else:
         for chunk in client_chunks:
             client_image_files += image_files[num_examples_per_chunk*(chunk):num_examples_per_chunk*(chunk + 1)]
         np.random.shuffle(client_image_files)
-        for image_file in client_image_files[:int(num_examples_per_chunk*0.9)]:
+        for image_file in client_image_files[:int(len(client_image_files)*0.9)]:
             label = int(image_file.split("/")[-2])
             shutil.copy(image_file, args.data_dir + "clients/c{}/fit/{}/".format(str(c), str(label)))
-        for image_file in client_image_files[int(num_examples_per_chunk*0.9):]:
+        for image_file in client_image_files[int(len(client_image_files)*0.9):]:
             label = int(image_file.split("/")[-2])
             shutil.copy(image_file, args.data_dir + "clients/c{}/evaluate/{}/".format(str(c), str(label)))
