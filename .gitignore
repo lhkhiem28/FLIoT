@@ -1,4 +1,6 @@
+/datasets
+**/*.pt*
+**/*.out
+
 **/__pycache__
 **/wandb
-
-**/darknet53.conv.74

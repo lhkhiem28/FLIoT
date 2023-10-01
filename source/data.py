@@ -4,34 +4,32 @@ from libs import *
 class ImageDataset(torch.utils.data.Dataset):
     def __init__(self, 
         data_dir, 
-        image_size = 32, 
-        augment = False, 
     ):
-        self.image_files = glob.glob(data_dir + "*/*")
-        if augment:
-            self.transform = A.Compose(
-                [
-                    A.RandomResizedCrop(height = image_size, width = image_size, ), 
-                    A.HorizontalFlip(p = 0.5), 
-                    A.Normalize(mean = (0.491372549, 0.482352941, 0.446666667, ), std = (0.247058824, 0.243529412, 0.261568627, ), ), AT.ToTensorV2(), 
-                ]
-            )
-        else:
-            self.transform = A.Compose(
-                [
-                    A.Normalize(mean = (0.491372549, 0.482352941, 0.446666667, ), std = (0.247058824, 0.243529412, 0.261568627, ), ), AT.ToTensorV2(), 
-                ]
-            )
+        self.image_paths = glob.glob(data_dir + "*/*")
+        self.transform = A.Compose(
+            [
+                A.Resize(
+                    height = 32, width = 32, 
+                ), 
+                A.Normalize(), AT.ToTensorV2(), 
+            ]
+        )
 
     def __len__(self, 
     ):
-        return len(self.image_files)
+        return len(self.image_paths)
 
     def __getitem__(self, 
         index, 
     ):
-        image_file = self.image_files[index]
-        image = np.load(image_file)
-        image, label = self.transform(image = image)["image"], int(image_file.split("/")[-2])
+        image_path = self.image_paths[index]
+        label = int(image_path.split("/")[-2])
+
+        image = cv2.imread(image_path)
+        image = cv2.cvtColor(
+            image, 
+            code = cv2.COLOR_BGR2RGB, 
+        )
+        image = self.transform(image = image)["image"]
 
         return image, label
