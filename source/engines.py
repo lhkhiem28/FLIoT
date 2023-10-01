@@ -50,7 +50,7 @@ def server_test_fn(
         for images, labels in tqdm.tqdm(test_loaders["test"]):
             images, labels = images.to(device), labels.to(device)
 
-            logits = client_model(images.float())
+            logits = server_model(images.float())
             loss = F.cross_entropy(logits, labels)
 
             running_loss, running_corrects = running_loss + loss.item()*images.size(0), running_corrects + torch.sum(torch.max(logits, 1)[1] == labels.data).item()

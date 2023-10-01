@@ -18,8 +18,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     wandb.login(key = "b8731afd2f2cefd26df285f59339b7834d05339b")
     wandb.init(
-        entity = args.wandb_entity, project = args.dataset, 
-        name = "num_rounds = {:3}, num_epochs = {:3}".format(args.num_rounds, args.num_epochs), 
+        project = args.dataset.split("/")[0], name = "num_rounds = {:3}, num_epochs = {:3}".format(args.num_rounds, args.num_epochs), 
+        # mode = "disabled", 
     )
 
     test_loaders = {
@@ -32,8 +32,8 @@ if __name__ == "__main__":
         )
     }
     server_model = torchvision.models.efficientnet_b2()
-    server_model.classifier = nn.Linear(
-        server_model.classifier.in_features, args.num_classes, 
+    server_model.classifier[1] = nn.Linear(
+        server_model.classifier[1].in_features, args.num_classes, 
     )
     flwr.server.start_server(
         server_address = "{}:{}".format(args.server_address, args.server_port), 

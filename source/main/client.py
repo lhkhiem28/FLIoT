@@ -43,7 +43,7 @@ class Client(flwr.client.NumPyClient):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
-    parser.add_argument("--dataset", type = str, default = "CIFAR10/clients-5.0"), parser.add_argument("--client_dataset", type = int)
+    parser.add_argument("--dataset", type = str, default = "CIFAR10/clients-5.0"), parser.add_argument("--client_dataset", type = str)
     parser.add_argument("--num_classes", type = int, default = 10)
     parser.add_argument("--num_clients", type = int, default = 10)
     parser.add_argument("--num_rounds", type = int, default = 500)
@@ -61,8 +61,8 @@ if __name__ == "__main__":
         )
     }
     client_model = torchvision.models.efficientnet_b2()
-    client_model.classifier = nn.Linear(
-        client_model.classifier.in_features, args.num_classes, 
+    client_model.classifier[1] = nn.Linear(
+        client_model.classifier[1].in_features, args.num_classes, 
     )
     client_optim = optim.Adam(
         client_model.parameters(), weight_decay = 5e-5, 
