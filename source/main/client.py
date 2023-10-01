@@ -20,7 +20,9 @@ class Client(flwr.client.NumPyClient):
     def get_parameters(self, 
         config, 
     ):
-        return [value.cpu().numpy() for key, value in self.client_model.state_dict().items()]
+        parameters = [value.cpu().numpy() for key, value in self.client_model.state_dict().items()]
+
+        return parameters
 
     def fit(self, 
         parameters, config, 

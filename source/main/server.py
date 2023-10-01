@@ -4,6 +4,7 @@ sys.path.append(__dir__), sys.path.append(os.path.abspath(os.path.join(__dir__, 
 from libs import *
 
 from strategies import *
+from data import ImageDataset
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -21,18 +22,26 @@ if __name__ == "__main__":
         name = "num_rounds = {:3}, num_epochs = {:3}".format(args.num_rounds, args.num_epochs), 
     )
 
+    test_loaders = {
+        "test":torch.utils.data.DataLoader(
+            ImageDataset(
+                data_dir = "../../datasets/{}/{}/".format(args.dataset.split("/")[0], "server"), 
+            ), 
+            num_workers = 0, batch_size = 32, 
+            shuffle = False, 
+        )
+    }
     server_model = torchvision.models.efficientnet_b2()
     server_model.classifier = nn.Linear(
         server_model.classifier.in_features, args.num_classes, 
     )
-    initial_parameters = [value.cpu().numpy() for key, value in server_model.state_dict().items()]
-    initial_parameters = flwr.common.ndarrays_to_parameters(initial_parameters)
     flwr.server.start_server(
         server_address = "{}:{}".format(args.server_address, args.server_port), 
         config = flwr.server.ServerConfig(num_rounds = args.num_rounds), 
         strategy = FedAvg(
             min_available_clients = args.num_clients, min_fit_clients = args.num_clients, 
-            initial_parameters = initial_parameters, 
+            test_loaders = test_loaders, 
+            server_model = server_model, 
         ), 
     )
 
