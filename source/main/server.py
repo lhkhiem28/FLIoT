@@ -18,7 +18,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     wandb.login(key = "b8731afd2f2cefd26df285f59339b7834d05339b")
     wandb.init(
-        project = args.dataset.split("/")[0], name = "num_rounds = {:3}, num_epochs = {:3}".format(args.num_rounds, args.num_epochs), 
+        project = args.dataset.split("/")[0].replace("/", "-"), name = "num_rounds = {:3}, num_epochs = {:3}".format(args.num_rounds, args.num_epochs), 
         # mode = "disabled", 
     )
 
