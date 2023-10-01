@@ -27,7 +27,7 @@ if __name__ == "__main__":
             ImageDataset(
                 data_dir = "../../datasets/{}/{}/".format(args.dataset.split("/")[0], "server"), 
             ), 
-            num_workers = 0, batch_size = 32, 
+            batch_size = 32, drop_last = True, 
             shuffle = False, 
         )
     }
