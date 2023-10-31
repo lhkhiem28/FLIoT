@@ -48,7 +48,6 @@ if __name__ == "__main__":
     parser.add_argument("--num_clients", type = int, default = 10)
     parser.add_argument("--num_rounds", type = int, default = 500)
     parser.add_argument("--num_epochs", type = int, default = 1)
-    parser.add_argument("--wandb_entity", type = str, default = "khiemlhfx")
     args = parser.parse_args()
 
     fit_loaders = {
