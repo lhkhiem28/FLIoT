@@ -45,9 +45,9 @@ if __name__ == "__main__":
     parser.add_argument("--server_address", type = str, default = "127.0.0.1"), parser.add_argument("--server_port", type = int, default = 9999)
     parser.add_argument("--dataset", type = str, default = "CIFAR10/clients-5.0"), parser.add_argument("--client_dataset", type = str)
     parser.add_argument("--num_classes", type = int, default = 10)
-    parser.add_argument("--num_clients", type = int, default = 10)
-    parser.add_argument("--num_rounds", type = int, default = 500)
-    parser.add_argument("--num_epochs", type = int, default = 1)
+    parser.add_argument("--num_clients", type = int, default = 20)
+    parser.add_argument("--num_rounds", type = int, default = 250)
+    parser.add_argument("--num_epochs", type = int, default = 2)
     args = parser.parse_args()
 
     fit_loaders = {
