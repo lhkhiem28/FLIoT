@@ -2,6 +2,7 @@ cd ../main/
 
 nohup python server.py --server_port=9991 --dataset="CIFAR10/clients-1.0" --num_rounds=250 --num_epochs=2 > server-1.0.out &
 sleep 30
+
 nohup python client.py --server_port=9991 --dataset="CIFAR10/clients-1.0" --client_dataset=client00 --num_rounds=250 --num_epochs=2 > client00-1.0.out &
 sleep 3
 nohup python client.py --server_port=9991 --dataset="CIFAR10/clients-1.0" --client_dataset=client01 --num_rounds=250 --num_epochs=2 > client01-1.0.out &
