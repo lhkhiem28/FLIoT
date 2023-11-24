@@ -55,7 +55,7 @@ if __name__ == "__main__":
             ImageDataset(
                 data_dir = "../../datasets/{}/{}/".format(args.dataset, args.client_dataset), 
             ), 
-            batch_size = 16, drop_last = True, 
+            batch_size = 32, drop_last = True, 
             shuffle = True, 
         )
     }
